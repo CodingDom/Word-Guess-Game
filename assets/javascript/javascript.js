@@ -12,6 +12,7 @@ var myGameArea = {
     canvas : document.createElement('canvas'),
     start : function() {
         document.getElementById('game-container').appendChild(this.canvas);
+        this.canvas.style.position = "relative";
         this.canvas.style.height = "100%";
         this.canvas.style.width = "100%";
         this.canvas.style.backgroundColor = "#F5EFE7";
@@ -83,12 +84,13 @@ function component(width, height, appearance, x, y, type) {
 
 myGameArea.start();
 //Hangman stand
-var bottom = new component(100, 5, "black", 0, ((myGameArea.canvas.offsetHeight)/2));
-var middle = new component(5, 100, "black", 45, ((myGameArea.canvas.offsetHeight)/2)-100);
-var topPart = new component(100, 5, "black", 40, ((myGameArea.canvas.offsetHeight)/2)-102);
-var topPart2 = new component(2, 10, "black", 135, ((myGameArea.canvas.offsetHeight)/2)-100);
+console.log(myGameArea.canvas.offsetHeight);
+var bottom = new component(100, 5, "black", 1, ((myGameArea.canvas.height)-10));
+var middle = new component(5, 100, "black", 45, ((bottom.y))-100);
+var topPart = new component(100, 5, "black", 40, ((middle.y))-5);
+var topPart2 = new component(2, 10, "black", 135, (topPart.y));
 
-var head = new component(10, 0, "black", 136, ((myGameArea.canvas.offsetHeight)/2)-80,"circle");
+var head = new component(10, 0, "black", 136, (topPart2.y+20),"circle");
 
 console.log((myGameArea.canvas.offsetHeight)/2);
 bottom.update();
