@@ -1,12 +1,14 @@
+var container = document.getElementById('game-container');
+
 var myGameArea = {
     canvas : document.createElement('canvas'),
     start : function() {
-        document.getElementById('game-container').appendChild(this.canvas);
+        container.insertBefore(this.canvas, container.children[0]);
         this.canvas.style.position = "relative";
-        this.canvas.style.height = "100%";
-        this.canvas.style.width = "100%";
-        this.canvas.style.backgroundColor = "#F5EFE7";
-        this.canvas.style.boxShadow = "0px 0px 3px 1px grey";
+        this.canvas.style.marginLeft = "20px";
+        this.canvas.style.height = "75%";
+        this.canvas.style.width = "75%";
+        this.canvas.style.cssFloat = "left";
         this.context = this.canvas.getContext("2d");
     },
 };
@@ -43,14 +45,13 @@ function component(width, height, appearance, x, y, type, angle) {
     this.height = height;
     this.x = x;
     this.y = y;
-    this.startX = x;
-    this.startY = y;    
     this.update = function() {
         ctx = myGameArea.context;
+        //Rotation used for legs/arms
         if (angle) {
             ctx.rotate(angle);
-            console.log(angle);
         };
+
         if (type == "image") {
             ctx.drawImage(this.image,
                 this.x,
@@ -85,19 +86,6 @@ function component(width, height, appearance, x, y, type, angle) {
             ctx.rotate(-angle);
         }
     };
-    this.newPos = function() {
-        var right = 0;
-        var left = 0;
-        if ((this.x+this.right) < myGameArea.canvas.width-this.width) {
-            right = this.right;
-        };
-        if ((this.x-this.left) > 5) {
-            left = this.left;
-        };
-        this.x += right+left;
-        this.y += (-this.up)+(-this.down); 
-        return     
-    };    
 };
 
 function createStand() {
@@ -105,11 +93,6 @@ function createStand() {
     for (var i = 0; i < arr.length; i++) {
         hangman.stand[arr[i]].update();
     };
-    for (var i = 0; i < hangman.figure.length; i++) {
-        hangman.figure[i].update();
-        console.log(hangman.figure[i].y);
-    }
-    
 };
 
 createStand();
