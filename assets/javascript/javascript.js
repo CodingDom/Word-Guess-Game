@@ -1,13 +1,3 @@
-// function $(id) {
-//     var type = id.substr(0,1);
-//     console.log(type);
-//     id = id.substr(1),id.length;
-//     console.log(id);
-//     if (type == "#") {
-//         return document.getElementById(id);
-//     }
-// }
-
 var myGameArea = {
     canvas : document.createElement('canvas'),
     start : function() {
@@ -21,8 +11,29 @@ var myGameArea = {
     },
 };
 
+myGameArea.start();
+
+const canSize = (myGameArea.canvas.height)-10;
+
+var hangman = {
+    stand: {
+        bottom : new component(100, 5, "black", 1, canSize),
+        middle : new component(5, 100, "black", 45, canSize-100),
+        topPart : new component(100, 5, "black", 40, canSize-105),
+        topPart2 : new component(2, 10, "black", 135, canSize-105),
+    },
+    figure: [
+        new component(10, 0, "black", 136, (canSize-85),"circle"),
+        new component(3, 27, "black", 135, (canSize-75)),
+        new component(20, 3, "black", 160, -35,undefined,(Math.PI*45/180)),
+        new component(20, 3, "black", 12, 158,undefined,(Math.PI*45/-180)),
+        new component(20, 3, "black", 147, -48,undefined,(Math.PI*45/180)),
+        new component(20, 3, "black", 26, 145,undefined,(Math.PI*45/-180)),
+    ]
+};
+
 //Creating canvas objects
-function component(width, height, appearance, x, y, type) {
+function component(width, height, appearance, x, y, type, angle) {
     this.type = type;
     if (type == "image") {
         this.image = new Image();
@@ -36,6 +47,10 @@ function component(width, height, appearance, x, y, type) {
     this.startY = y;    
     this.update = function() {
         ctx = myGameArea.context;
+        if (angle) {
+            ctx.rotate(angle);
+            console.log(angle);
+        };
         if (type == "image") {
             ctx.drawImage(this.image,
                 this.x,
@@ -65,6 +80,10 @@ function component(width, height, appearance, x, y, type) {
         ctx.fillStyle = appearance;
         ctx.fillRect(this.x, this.y, this.width, this.height);
         }
+        //Reset angle of canvas
+        if (angle) {
+            ctx.rotate(-angle);
+        }
     };
     this.newPos = function() {
         var right = 0;
@@ -81,20 +100,16 @@ function component(width, height, appearance, x, y, type) {
     };    
 };
 
+function createStand() {
+    var arr = Object.keys(hangman.stand);
+    for (var i = 0; i < arr.length; i++) {
+        hangman.stand[arr[i]].update();
+    };
+    for (var i = 0; i < hangman.figure.length; i++) {
+        hangman.figure[i].update();
+        console.log(hangman.figure[i].y);
+    }
+    
+};
 
-myGameArea.start();
-//Hangman stand
-console.log(myGameArea.canvas.offsetHeight);
-var bottom = new component(100, 5, "black", 1, ((myGameArea.canvas.height)-10));
-var middle = new component(5, 100, "black", 45, ((bottom.y))-100);
-var topPart = new component(100, 5, "black", 40, ((middle.y))-5);
-var topPart2 = new component(2, 10, "black", 135, (topPart.y));
-
-var head = new component(10, 0, "black", 136, (topPart2.y+20),"circle");
-
-console.log((myGameArea.canvas.offsetHeight)/2);
-bottom.update();
-middle.update();
-topPart.update();
-topPart2.update();
-head.update();
+createStand();

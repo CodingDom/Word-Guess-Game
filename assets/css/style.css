@@ -1,3 +1,7 @@
+html, body {
+    font-family: 'Acme', sans-serif;
+}
+
 #game-container {
     height: 50%;
     width: 50%;
