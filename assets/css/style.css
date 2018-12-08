@@ -9,7 +9,7 @@ html, body {
 #container {
     position: relative;
     margin: auto;
-    width: 50%;
+    width: 760px;
     height: 95%;
     border: 2px dotted white;
     padding: 10px;
@@ -39,16 +39,46 @@ html, body {
 
 #songs-container {
     width: 50%;
+    float: left;
     margin-top: 5px;
-    border-right: 2px dotted white;
+}
+
+#sign {
+    position: relative;
+    margin: auto;
+    background-image: url("../images/sign2.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 300px;
+    height: 191px;
+    top: 20px;
+    z-index: 2;
 }
 
 #songs-container img {
-    position: relative;
+    display: block;
+    margin: auto;
+}
+
+#current {
+    position: absolute;
+    height: 50%;
+    width: 55%;
+    left: 23%;
+    top: 25%;
+}
+
+#figure {
+    position: absolute;
+    left: 15%;
+    bottom: 15px;
 }
 
 #stats-container {
-    width: 50%;
+    width: 45%;
+    height: 50%;
+    float: right;
     margin-top: 5px;
-    border-right: 2px dotted white;
+    padding: 0 5px;
+    border-left: 2px dotted white;
 }
