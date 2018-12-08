@@ -1,9 +1,12 @@
+///Where my canvas and important texts are held
 var myGameArea = {
     container : document.getElementById('game-container'),
+    phrase : document.getElementById('phrase'),
     guesses : document.getElementById('guesses'),
     remainder : document.getElementById('remainder'),
     losses : document.getElementById("losses"),
     wins : document.getElementById('wins'),
+    audio : document.createElement('audio'),
     canvas : document.createElement('canvas'),
     start : function() {
         this.container.insertBefore(this.canvas, this.container.children[0]);
@@ -19,8 +22,9 @@ var myGameArea = {
     },
 };
 
-myGameArea.start();
+myGameArea.start(); //Preps the canvas
 
+//The player's statistics
 var myGameStats = {
     guesses : [],
     remainder : 13,
@@ -37,22 +41,30 @@ var myGameStats = {
                 break;
                 case "losses":
                     this.losses = 0;
-                    myGameArea.
                 break;
                 case "wins":
                     this.wins = 0;
                 break;
-            }
+            };
             //Reseting text
             if (myGameArea[arguments[i]]) {
                 myGameArea[arguments[i]].textContent = this[arguments[i]];
-            }
-        }
+            };
+        };
     }
-}
+};
 
+var songs = [
+    {artist:"Michael Jackson",name:"Pretty Young Thing",audio:""},
+    {artist:"Michael Jackson",name:"Thriller",audio:""},
+    {artist:"Michael Jackson",name:"Remember The Time",audio:""},
+    {artist:"Michael Jackson",name:"Man In The Mirror",audio:""},
+];
+
+//Size of canvas used for positioning of stand
 const canSize = (myGameArea.canvas.height)-10;
 
+//Creating Hangman's stand and stick figure
 var hangman = {
     stand: {
         bottom : new component(100, 5, "black", 1, canSize),
@@ -103,10 +115,11 @@ function component(width, height, appearance, x, y, type, angle) {
         //Reset angle of canvas
         if (angle) {
             ctx.rotate(-angle);
-        }
+        };
     };
 };
 
+//Draw stand onto canvas
 function createStand() {
     var arr = Object.keys(hangman.stand);
     for (var i = 0; i < arr.length; i++) {
@@ -114,9 +127,10 @@ function createStand() {
     };
 };
 
+//Restart round
 function restart(hardReset) {
     myGameArea.clear(); //Clearing hangman figure
-    myGameArea.container.innerHTML = ""; //Clearing current word
+    myGameArea.phrase.innerHTML = ""; //Clearing current word
     createStand();
     if (!hardReset) {
         myGameStats.reset("guesses","remainder");
