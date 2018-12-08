@@ -1,9 +1,12 @@
-var container = document.getElementById('game-container');
-
 var myGameArea = {
+    container : document.getElementById('game-container'),
+    guesses : document.getElementById('guesses'),
+    remainder : document.getElementById('remainder'),
+    losses : document.getElementById("losses"),
+    wins : document.getElementById('wins'),
     canvas : document.createElement('canvas'),
     start : function() {
-        container.insertBefore(this.canvas, container.children[0]);
+        this.container.insertBefore(this.canvas, this.container.children[0]);
         this.canvas.style.position = "relative";
         this.canvas.style.marginLeft = "20px";
         this.canvas.style.height = "75%";
@@ -11,9 +14,42 @@ var myGameArea = {
         this.canvas.style.cssFloat = "left";
         this.context = this.canvas.getContext("2d");
     },
+    clear : function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    },
 };
 
 myGameArea.start();
+
+var myGameStats = {
+    guesses : [],
+    remainder : 13,
+    losses : 0,
+    wins : 0,
+    reset : function() {
+        for (var i = 0; i < arguments.length; i++) {
+            switch (arguments[i]) {
+                case "guesses":
+                    this.guesses = [];
+                break;
+                case "remainder":
+                    this.remainder = 13;
+                break;
+                case "losses":
+                    this.losses = 0;
+                    myGameArea.
+                break;
+                case "wins":
+                    this.wins = 0;
+                break;
+            }
+            //Reseting text
+            if (myGameArea[arguments[i]]) {
+                myGameArea[arguments[i]].textContent = this[arguments[i]];
+            }
+        }
+    }
+}
 
 const canSize = (myGameArea.canvas.height)-10;
 
@@ -52,26 +88,8 @@ function component(width, height, appearance, x, y, type, angle) {
             ctx.rotate(angle);
         };
 
-        if (type == "image") {
-            ctx.drawImage(this.image,
-                this.x,
-                this.y,
-                this.width,
-                this.height);
-        }
-        else if (type == "text") {
-            ctx.font = this.width + " " + this.height;
-            ctx.fillStyle = appearance;
-            //Hover effect
-            this.textWidth = ctx.measureText(this.text).width
-            if (this.hover && mouse.x && mouse.y) {
-                if (this.x+12 <= mouse.x && (this.x+12)+(this.textWidth) >= mouse.x 
-                    && this.y-(parseInt(ctx.font.replace("px",''))/2) <= mouse.y && this.y+(parseInt(ctx.font.replace("px",''))/2) >= mouse.y) {                        ctx.fillStyle = "red";
-                }
-            }
-            ctx.fillText(this.text, this.x, this.y);
-        }
-        else if (type == "circle") {
+        //Draw piece to canvas
+        if (type == "circle") {
             ctx.beginPath();
             ctx.arc(this.x,this.y,this.width,this.height,2*Math.PI);
             ctx.fillStyle = appearance;
@@ -80,7 +98,8 @@ function component(width, height, appearance, x, y, type, angle) {
         else {
         ctx.fillStyle = appearance;
         ctx.fillRect(this.x, this.y, this.width, this.height);
-        }
+        };
+
         //Reset angle of canvas
         if (angle) {
             ctx.rotate(-angle);
@@ -95,4 +114,17 @@ function createStand() {
     };
 };
 
-createStand();
+function restart(hardReset) {
+    myGameArea.clear(); //Clearing hangman figure
+    myGameArea.container.innerHTML = ""; //Clearing current word
+    createStand();
+    if (!hardReset) {
+        myGameStats.reset("guesses","remainder");
+    }
+    else {
+        myGameStats.reset("guesses","remainder","wins","losses");
+    };
+    
+}
+
+restart();

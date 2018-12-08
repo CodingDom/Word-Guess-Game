@@ -17,6 +17,7 @@ html, body {
 
 #title {
     text-align: center;
+    font-size: 42px;
 }
 
 #game-container {
@@ -51,7 +52,7 @@ html, body {
     background-repeat: no-repeat;
     width: 300px;
     height: 191px;
-    top: 20px;
+    top: 10px;
     z-index: 2;
 }
 
@@ -71,12 +72,12 @@ html, body {
 #figure {
     position: absolute;
     left: 15%;
-    bottom: 15px;
+    bottom: 10px;
 }
 
 #stats-container {
     width: 45%;
-    height: 50%;
+    height: 45%;
     float: right;
     margin-top: 5px;
     padding: 0 5px;
