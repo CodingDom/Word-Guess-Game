@@ -32,24 +32,23 @@ html, body {
 }
 
 #game-container h1 {
-    /* float: right; */
     display: inline-block;
     margin: 0 20px;
     letter-spacing: 10px;
     bottom: 0;
+    overflow: hidden;
 }
 
 #phrase {
     clear: both;
+    width: 100%;
 }
 
 #songs-container {
-    /* position: relative; */
     height: 45%;
     width: 50%;
     float: left;
     margin-top: 5px;
-    overflow: hidden;
 }
 
 #song-title {
@@ -84,7 +83,6 @@ html, body {
 #current {
     position: relative;
     width: 65%;
-    /* height: 50%; */
     padding-top: 35%;
     display: block;
     margin: 15% auto;
