@@ -170,6 +170,15 @@ function songSetUp(song) {
     }); 
 };
 
+function soundEffect(name) {
+    const location = "assets/audio/fx_";
+    var fx = document.createElement('audio');
+    fx.src = location + name;
+    fx.play();
+    fx.remove();
+    fx = null;
+}
+
 //Checks each word for the guessed letter
 var debounce = false;
 function checkGuess(guess) {
@@ -193,24 +202,32 @@ function checkGuess(guess) {
     });
 
     guess = guess.toUpperCase();
+    //Reduce remainder while added onto hangman figure
     if (!correct && myGameStats.guesses.indexOf(guess) == -1) {
         myGameStats.guesses.unshift(guess);
         myGameArea.guesses.textContent = myGameStats.guesses;
         hangman.figure[6-myGameStats.remainder].update();
         myGameStats.remainder--;
         myGameArea.remainder.textContent = myGameStats.remainder;
-    };
+        soundEffect('zap.mp3');
+    }
+    else if (correct) {
+        soundEffect('blop.mp3');
+    } 
 
     //Checks if all words are complete, then gives win 
     if (filledWords >= wordIndex) {
+        debounce = true;
         myGameStats.wins++;
         myGameArea.wins.textContent = myGameStats.wins;
         myGameArea.title.textContent = songs[songIndex-1].artist + " - " + songs[songIndex-1].name;
         myGameArea.cover.style.backgroundImage = "url(" + songs[songIndex-1].cover + ")";
+        myGameArea.cover.style.visibility = "visible";
         myGameArea.audio.src = songs[songIndex-1].audio;
+        myGameArea.audio.volume = 0.8;
         myGameArea.audio.play();
         myGameArea.phrase.style.color = "green";
-        debounce = true;
+        soundEffect('correct.mp3');
         setTimeout(function() {
             restart();
             myGameArea.phrase.style.color = "black";
@@ -218,10 +235,11 @@ function checkGuess(guess) {
         },3000);
     }
     else if (myGameStats.remainder <= 0) { //Gives loss if remaining guesses is 0
+        debounce = true;
         myGameStats.losses++;
         myGameArea.losses.textContent = myGameStats.losses;
         myGameArea.phrase.style.color = "red";
-        debounce = true;
+        soundEffect('incorrect.mp3');
         setTimeout(function() {
             restart();
             myGameArea.phrase.style.color = "black";
