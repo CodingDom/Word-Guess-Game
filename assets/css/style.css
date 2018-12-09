@@ -89,6 +89,8 @@ html, body {
     border-radius: 20px;
     background-size: cover;
     background-repeat: no-repeat;
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
 }
 
 #stats-container {
