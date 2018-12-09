@@ -36,10 +36,11 @@ html, body {
     display: inline-block;
     margin: 0 20px;
     letter-spacing: 10px;
+    bottom: 0;
 }
 
 #phrase {
-    padding-top: 35%;
+    clear: both;
 }
 
 #songs-container {
