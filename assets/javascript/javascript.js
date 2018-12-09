@@ -14,7 +14,7 @@ var myGameArea = {
         this.container.insertBefore(this.canvas, this.container.children[0]);
         this.canvas.style.position = "relative";
         this.canvas.style.marginLeft = "20px";
-        this.canvas.style.height = "75%";
+        this.canvas.style.height = "70%";
         this.canvas.style.width = "75%";
         this.canvas.style.cssFloat = "left";
         this.context = this.canvas.getContext("2d");
