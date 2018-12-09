@@ -179,8 +179,8 @@ function soundEffect(name) {
     fx = null;
 }
 
+var debounce = false; //Waits for win/loss to finish registering
 //Checks each word for the guessed letter
-var debounce = false;
 function checkGuess(guess) {
     if (debounce) { return; }; //If currently doing lose/win effect then stop running function
     var wordIndex = 0;
@@ -189,9 +189,12 @@ function checkGuess(guess) {
     myGameStats.currentSong.forEach(function(word) {
         for (var i = 0; i < word.length; i++) {
             if (word[i].toLowerCase() == guess) {
-                const text = myGameArea.phrase.children[wordIndex].textContent;
-                myGameArea.phrase.children[wordIndex].textContent = text.substring(0,i) + myGameStats.currentSong[wordIndex][i] + text.substr(i+1);
                 correct = true;
+                const text = myGameArea.phrase.children[wordIndex].textContent;
+                if (text[i] != "_") { //Checks if correct letter was already guessed earlier
+                    correct = "checkedAlready";
+                };
+                myGameArea.phrase.children[wordIndex].textContent = text.substring(0,i) + myGameStats.currentSong[wordIndex][i] + text.substr(i+1);
             };
         };
         //Checking for any remaining underscores
@@ -211,7 +214,7 @@ function checkGuess(guess) {
         myGameArea.remainder.textContent = myGameStats.remainder;
         soundEffect('zap.mp3');
     }
-    else if (correct) {
+    else if (correct == true) {
         soundEffect('blop.mp3');
     } 
 
