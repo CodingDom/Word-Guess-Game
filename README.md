@@ -2,7 +2,7 @@
 <img src="https://i.imgur.com/ZKtwXCW.png" width="100%">
 
 ## About
-MJ Word Guess is a hangman game based on Michael Jackon's musical catalog. Each round uses a Michael Jackson song from the game's file storage. Upon winning a round, the correctly guessed song will play while displaying it's cover art. The game utilizes an html canvas in order to create the hangman doll's body part for each incorrect guess. Once the body is fully formed, the player loses.
+<i>Guess The Classic</i> is a hangman game based on Michael Jackon's musical catalog. Each round uses a Michael Jackson song from the game's file storage. Upon winning a round, the correctly guessed song will play while displaying it's cover art. The game utilizes an html canvas in order to create the hangman doll's body part for each incorrect guess. Once the body is fully formed, the player loses.
 
 ## How To Play
 
